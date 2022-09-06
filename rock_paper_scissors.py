@@ -31,7 +31,7 @@ choices = [rock, paper, scissors]
 player_choice = int(input("What do you choose? Type 0 for rock, 1 for paper and 2 for scissors.\n"))
 print(choices[player_choice])
 
-com_choice = random.choice(choices)
+com_choice = random.randint(0, 2)
 print("Computer chose:")
 print(choices[com_choice])
 
