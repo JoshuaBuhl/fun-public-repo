@@ -35,6 +35,7 @@ com_choice = random.randint(0, 2)
 print("Computer chose:")
 print(choices[com_choice])
 
+#making use of the fact that 'choices' has it's Elements ordered in a way that Element x beats Elements x - 1.
 if choices[player_choice] == choices[(com_choice + 1) % 3]:
     print("You lose")
 elif player_choice == com_choice:
