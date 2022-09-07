@@ -66,9 +66,6 @@ end_of_game = False
 # Set 'lives' to equal 6.
 lives = 6
 
-# Testing code
-print(f'Pssst, the solution is {chosen_word}.')
-
 # Create blanks
 display = []
 for _ in range(word_length):
