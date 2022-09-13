@@ -16,7 +16,7 @@ for number in [nr_letters, nr_numbers, nr_symbols]:
 
 password = ""
 
-for character in range(nr_letters):
+while len(available_chars) > 0:
     which_kind = random.randrange(len(available_chars))
     if which_kind == 0:
         password += random.choice(letters)
