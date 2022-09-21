@@ -12,12 +12,6 @@
 import random
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-dealers_hand = []
-players_hand = []
-player_stays = False
-dealer_stays = False
-dealer_bust = False
-player_bust = False
 
 
 def deal_card(hand):
@@ -33,58 +27,66 @@ def deal_card(hand):
 
 
 def dealer_choice(hand):
-    if sum(hand) > 17:
+    if sum(hand) >= 17:
         return False
+    else:
+        return True
 
 
 def gameover():
+    players_score = sum(players_hand)
+    dealers_score = sum(dealers_hand)
     if player_bust:
         print("You went over 21, you lose!")
-        return True
     elif dealer_bust:
         print("The dealer went over 21, you win!")
-        return True
-    elif player_stays and dealer_stays:
-        if sum(players_hand) > sum(dealers_hand):
-            print(f"You won with {sum(players_hand)}!")
-        elif sum(players_hand) == sum(dealers_hand):
-            print(f"It's a Draw with {sum(players_hand)}.")
+    elif players_score > dealers_score:
+        print(f"You won with {players_score}!")
+    elif players_score == dealers_score:
+        if len(players_hand) == 2 != len(dealers_hand) == 2:
+            if len(players_hand) == 2:
+                print("You win, your Blackjack beats the tie!")
+            else:
+                print("You lose, the dealers Blackjack beats the tie!")
         else:
-            print(f"The Dealer won with {sum(dealers_hand)}.\nToo Bad!")
-        return True
+            print(f"It's a Draw with {players_score}.")
     else:
-        return False
+        print(f"The Dealer won with {dealers_score}.\nToo Bad!")
 
 
 print("Welcome to Blackjack!")
 
-if (input("Do you want to play a round?(y/n)")).lower() == 'y':
+while (input("Do you want to play a round?(y/n)\n")).lower() == 'y':
+    dealers_hand = []
+    players_hand = []
+    players_turn = True
+    dealer_bust = False
+    player_bust = False
     deal_card(players_hand)
     deal_card(dealers_hand)
     deal_card(players_hand)
-    deal_card(dealers_hand)
 
-    print(f"Dealers cards: {[dealers_hand[0], '_']}\n "
+    print(f"Dealers cards: {dealers_hand}\n "
           f"Your cards: {players_hand}")
 
-    while not gameover():
-        if not player_stays and not player_bust:
-            if (input("Do you want another card?(y/n)").lower() == 'y'):
-                if deal_card(players_hand):
-                    player_bust = True
-                else:
-                    print(f"Dealers cards: {dealers_hand}\n "
-                          f"Your cards: {players_hand}")
+    while players_turn:
+        if (input("Do you want another card?(y/n)").lower() == 'y'):
+            if deal_card(players_hand):
+                player_bust = True
+                players_turn = False
             else:
-                player_stays = True
+                print(f"Dealers cards: {dealers_hand}\n "
+                      f"Your cards: {players_hand}")
+        else:
+            players_turn = False
 
-        if not dealer_stays and not dealer_bust:
-            if dealer_choice(dealers_hand):
-                if deal_card(dealers_hand):
-                    dealer_bust = True
-                else:
-                    print(f"Dealers cards: {dealers_hand}\n "
-                          f"Your cards: {players_hand}")
-            else:
-                dealer_stays = True
+    if not player_bust:
+        while dealer_choice(dealers_hand):
+            if deal_card(dealers_hand):
+                dealer_bust = True
+
+    print(f"Dealers cards: {dealers_hand}\n "
+          f"Your cards: {players_hand}")
+
+    gameover()
 
