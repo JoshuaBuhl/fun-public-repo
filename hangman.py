@@ -8,7 +8,7 @@ chosen_word = random.choice(word_list)
 
 end_of_game = False
 lives = 6
-already_guessed = [/0001F496]
+already_guessed = []
 
 # Create blanks
 display = ["_" for x in chosen_word]
@@ -20,12 +20,12 @@ while not end_of_game:
     os.system('cls')
 
     if guess in already_guessed:
-        print(f"You have already guessed {guess}")
+        print(f"You already guessed {guess}")
     else:
         already_guessed.append(guess)
         # Check if user is wrong.
         if guess not in chosen_word:
-            print(f"{guess} is not in the word, you have lost one life.")
+            print(f"{guess} is not in the word, you lost one life.")
             lives -= 1
             if lives == 0:
                 end_of_game = True
